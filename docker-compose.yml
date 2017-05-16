@@ -1,0 +1,20 @@
+version: '2'
+services:
+  rabbitmq:
+    image: $USER/rabbitmq:stomp
+    build: rabbitmq/
+    ports:
+      - 5672:5672
+      - 15672:15672
+      - 61613:61613
+  splunk:
+    image: $USER/splunk:stomp
+    build: splunk/
+    environment:
+      - SPLUNK_START_ARGS=--accept-license --answer-yes --no-prompt
+    hostname: splunk
+    ports:
+      - 8000:8000
+      - 8089:8089
+    volumes:
+      - ./apps/amls-frontend:/opt/splunk/etc/apps/amls-frontend
